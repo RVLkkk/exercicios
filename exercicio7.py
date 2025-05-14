@@ -64,7 +64,7 @@ def iniciar_sistema():
         
         opcao = input("escolha uma das opçoes do menu")
 
-        if opçao == "1":
+        if opcao == "1":
             mostrar_dados_clientes(clientes)
         elif opcao == "2":
             cadastrar_cliente(obter_dados_clientes())
