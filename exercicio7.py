@@ -1,75 +1,87 @@
-clientes = []
+db_clientes = "db_clientes.json"
+# clientes = []
+import json 
+import os
 
-def obter_dados_clientes():
+def carregar_dados():
+    if os.path.exists(db_clientes):
+        with open(db_clientes, "r", encoding="utf-8") as arq_json:
+            return json.load(arq_json)
+    else:
+        return [] 
 
-    nome_cliente = input("informe seu nome completo:")
-    idade_cliente = int(input("informe sua data de nascimento:"))
-    email_cliente = int(input("informe seu email:"))
-    endereco_cliente = input("informe o Enderoço:")
-    rg_cliente = int(input("informe seu RG:"))
-    cpf_cliente = float(input("informe seu cpf:"))
-    estado_cliente = input("digite seu estado:")
-    cidade_cliente = input("digite sua cidade:")
-    celular_cliente = int(input("digite seu celular:"))
-    telefone_cliente = int(input("digite seu telefone:"))
+ 
+def obter_dados_cliente():
+    nome_cliente = input("Informe o Nome Completo do Cliente")
+    cpf_cliente = int(input("Informe o CPF Completo do Cliente"))
+    rg_cliente = int(input("Informe o  Numero de RG Completo do Cliente"))
+    data_de_nascimento_cliente = input("Informe a Data de Nascimento do Cliente")
+    endereco_cliente = input("Informe o Endereço do Cliente")
+    cidade_cliente = input("Informe a Cidade do Cliente")
+    estado_cliente = input("Informe o Estado do Cliente")
+    telefone_cliente = int(input("Informe o Numero de Telefone do Cliente"))
+    celular_cliente = int(input("Informe o Numero de Celular do Cliente"))
+    email_cliente = input("Informe o E-mail Completo do Cliente")
 
     cliente = {
         "nome_cliente": nome_cliente,
-        "idade_cliente": idade_cliente,
-        "email_cliente": email_cliente,
-        "endereco_cliente": endereco_cliente,
-        "rg_cliente": rg_cliente,
         "cpf_cliente": cpf_cliente,
-        "estado_cliente": estado_cliente,
+        "rg_cliente": rg_cliente,
+        "data_de_nascimento_cliente": data_de_nascimento_cliente,
+        "endereco_cliente": endereco_cliente,
         "cidade_cliente": cidade_cliente,
+        "estado_cliente": estado_cliente,
+        "telefone_cliente": telefone_cliente,
         "celular_cliente": celular_cliente,
-        "telefone_cliente": telefone_cliente
-
+        "email_cliente": email_cliente
 
     }
 
     return cliente
 
-
 def cadastrar_cliente(dados_cliente):
+    clientes = carregar_dados()
     clientes.append(dados_cliente)
 
-    return clientes
+    with open(db_clientes, "w" , encoding="utf-8") as arq_json:
+        json.dump(clientes, arq_json, indent=4, ensure_ascii=False)
 
-def mostrar_dados_clientes(dados_clientes):
-    for cliente in dados_clientes:
+
+
+def mostrar_dados_clientes():
+    for cliente in obter_dados_cliente:
         print(f"""
-          nome do cliente: {cliente["nome_cliente"]}
-          idade do cliente: {cliente["idade_cliente"]}
-          email do cliente: {cliente["email_cliente"]}
-          endereco do cliente: {cliente["endereco_cliente"]}
-          rg do cliente: {cliente["rg_cliente"]}
-          cpf do cliente: {cliente["cpf_cliente"]}
-          estado do cliente: {cliente["estado_cliente"]}
-          cidade do cliente: {cliente["cidade_cliente"]}
-          celular do cliente: {cliente["celular_cliente"]}
-          telefone do cliente: {cliente["telefone_cliente"]}
-          
-""")
-    
-
-def iniciar_sistema():
-    while True:
-        print("")
-        print("=*80")
-        print("opçao 1- mostrar lista de clientes.")
-        print("opçao 2 - cadastrar clientes.")
-        print("opçao 3 - sair do sistema.")
-        print("=*80")
+              Nome do Cliente: {cliente["nome do cliente"]}
+              CPF do Cliente: {cliente["cpf do cliente"]}
+              RG do Cliente: {cliente["RG do cliente"]}
+              Data de Nascimento do Cliente{cliente["data de nascimento do cliente"]}
+              Endereco do Cliente{cliente["endereço do cliente"]}
+              Cidade do Cliente{cliente["cidade do cliente"]}
+              Estado do Cliente{cliente["estado do cliente"]}
+              Telefone do Cliente{cliente["telefone do cliente"]}
+              Celular do Cliente{cliente["celular do cliente"]}
+              """)
         
-        opcao = input("escolha uma das opçoes do menu")
+def iniciar_sistema():
+    clientes = carregar_dados()
+    while True:
+        
+        print("")
+        print("="*80)
+        print("Opcao 1 - Mostrar Lista de Clientes")
+        print("Opcao 2 - Cadastrar Clientes")
+        print("Opcao 3 - Sair do Sistema.")
+        print("="*80)
+
+        opcao = input("Escolha uma das opções do Menu: ")
 
         if opcao == "1":
             mostrar_dados_clientes(clientes)
         elif opcao == "2":
-            cadastrar_cliente(obter_dados_clientes())
+            cadastrar_cliente(obter_dados_cliente())
         elif opcao == "3":
-            print("sistema finalizado.")
+            print("Sistema Finalizado")
             break
         else:
-           print("opçao invalidade, escolha umas das opçoes do menu")
+            print("Opcao invalida, escolha uma das opções no menu.")
+iniciar_sistema()
