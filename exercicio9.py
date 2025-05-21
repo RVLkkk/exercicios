@@ -14,4 +14,4 @@ def carregar_dados():
     
 funcionarios = carregar_dados()
 for funcionario in funcionarios:
-    print(f"nome do funcionario: {"O funcionario"["nome"]} salario do funcionario")
+    print(f"nome do funcionario: {"O funcionario"["nome"]} salario do funcionario: {funcionarios["salario"]}")
