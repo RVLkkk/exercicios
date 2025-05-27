@@ -36,18 +36,30 @@ def obter_dados_cliente():
 
 #-------------------------------------------------------------------------------------------------------------------
 
-def cadastrar_filmes(nome_filme, categoria_filme):
-    dados_filme = []
-    
-    filme = {
-        "nome_filme": nome_filme,
-        "categoria_filme": categoria_filme
-}
+def cadastrar_filmes(receber_filmes):    
+    db_filmes = carregar_dados()
+    db_filmes.append(receber_filmes) 
 
-    dados_filme.append(filme)
-    return dados_filme
+    with open(filmes, "w", encoding="utf-8") as arq_json:
+        json.dump(db_filmes, arq_json, indent=4, ensure_ascili=False)
+
 
 #--------------------------------------------------------------------------------------------------------------------
+
+def mostrar_filmes(filmes):
+    if filmes:
+        for filme in filmes:
+            print(f"""
+                nome do filme {filme["nome do filme"]}
+                classificacao do filme {filme["classificacao"]}
+                descricao do filme {filme["descricao"]}
+                categoria do filme {filme["categoria"]}
+""")
+
+    else:
+        print("nao exite nenhum filme cadastrado")
+
+# ------------------------------------------------------------------------------------------------------------------
 
 def iniciar_sistema():
     clientes = carregar_dados()
